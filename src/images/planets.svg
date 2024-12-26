@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Partial globe in left corner -->
+  <g transform="translate(-100, 400)">
+    <!-- Main circle outline - partially visible -->
+    <circle cx="200" cy="200" r="200" fill="none" stroke="#61dafb" stroke-width="2"/>
+    
+    <!-- Horizontal ellipses -->
+    <ellipse cx="200" cy="200" rx="200" ry="40" fill="none" stroke="#61dafb" stroke-width="2"/>
+    <ellipse cx="200" cy="200" rx="200" ry="80" fill="none" stroke="#61dafb" stroke-width="2"/>
+    <ellipse cx="200" cy="200" rx="200" ry="120" fill="none" stroke="#61dafb" stroke-width="2"/>
+    
+    <!-- Vertical curved lines -->
+    <path d="M 200 0 C 350 0, 350 400, 200 400" fill="none" stroke="#61dafb" stroke-width="2"/>
+    <path d="M 400 200 C 400 50, 0 50, 0 200" fill="none" stroke="#61dafb" stroke-width="2"/>
+    <path d="M 200 0 C 275 50, 275 350, 200 400" fill="none" stroke="#61dafb" stroke-width="2"/>
+  </g>
+
+  <!-- Saturn-like planet in upper right -->
+  <g transform="translate(500, 150)">
+    <!-- Planet sphere -->
+    <circle cx="0" cy="0" r="80" fill="none" stroke="#61dafb" stroke-width="2"/>
+    
+    <!-- Sphere detail lines -->
+    <ellipse cx="0" cy="0" rx="80" ry="20" fill="none" stroke="#61dafb" stroke-width="2"/>
+    <ellipse cx="0" cy="0" rx="80" ry="40" fill="none" stroke="#61dafb" stroke-width="2"/>
+    <ellipse cx="0" cy="0" rx="80" ry="60" fill="none" stroke="#61dafb" stroke-width="2"/>
+    
+    <!-- Tilted rings -->
+    <g transform="rotate(-15)">
+      <!-- Outer rings -->
+      <ellipse cx="0" cy="0" rx="180" ry="25" fill="none" stroke="#61dafb" stroke-width="2"/>
+      <ellipse cx="0" cy="0" rx="160" ry="22" fill="none" stroke="#61dafb" stroke-width="2"/>
+      <ellipse cx="0" cy="0" rx="140" ry="19" fill="none" stroke="#61dafb" stroke-width="2"/>
+      
+      <!-- Inner rings -->
+      <ellipse cx="0" cy="0" rx="120" ry="16" fill="none" stroke="#61dafb" stroke-width="2"/>
+      <ellipse cx="0" cy="0" rx="100" ry="13" fill="none" stroke="#61dafb" stroke-width="2"/>
+      
+      <!-- Ring gap detail -->
+      <path d="M -130 -18 C -120 -10, -110 -5, -90 -5" fill="none" stroke="#61dafb" stroke-width="1"/>
+      <path d="M 90 5 C 110 5, 120 10, 130 18" fill="none" stroke="#61dafb" stroke-width="1"/>
+    </g>
+  </g>
+</svg>
+
