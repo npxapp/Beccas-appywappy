@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Main circle outline -->
+  <circle cx="400" cy="300" r="200" fill="none" stroke="#61dafb" stroke-width="2"/>
+  
+  <!-- Horizontal ellipses to create 3D effect -->
+  <ellipse cx="400" cy="300" rx="200" ry="40" fill="none" stroke="#61dafb" stroke-width="2"/>
+  <ellipse cx="400" cy="300" rx="200" ry="80" fill="none" stroke="#61dafb" stroke-width="2"/>
+  <ellipse cx="400" cy="300" rx="200" ry="120" fill="none" stroke="#61dafb" stroke-width="2"/>
+  <ellipse cx="400" cy="300" rx="200" ry="160" fill="none" stroke="#61dafb" stroke-width="2"/>
+  
+  <!-- Vertical curved lines -->
+  <path d="M 400 100 C 550 100, 550 500, 400 500" fill="none" stroke="#61dafb" stroke-width="2"/>
+  <path d="M 400 100 C 250 100, 250 500, 400 500" fill="none" stroke="#61dafb" stroke-width="2"/>
+  <path d="M 600 300 C 600 150, 200 150, 200 300" fill="none" stroke="#61dafb" stroke-width="2"/>
+  <path d="M 600 300 C 600 450, 200 450, 200 300" fill="none" stroke="#61dafb" stroke-width="2"/>
+  
+  <!-- Additional meridian lines -->
+  <path d="M 400 100 C 475 150, 475 450, 400 500" fill="none" stroke="#61dafb" stroke-width="2"/>
+  <path d="M 400 100 C 325 150, 325 450, 400 500" fill="none" stroke="#61dafb" stroke-width="2"/>
+</svg>
+
