@@ -1,0 +1,23 @@
+.Box--Box {
+  color: #007fff;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 16px;
+}
+
+.Box--Box-Text {
+  display: block;
+  text-align: left;
+}
+
+.Icon--Button {
+  color: #007fff;
+  font-size: 6rem;
+  position: relative;
+  margin: 0 32px;
+}
+
+.Icon--Icon {
+  color: #007fff;
+  font-size: 4rem;
+}
