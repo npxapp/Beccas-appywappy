@@ -1,7 +1,0 @@
-{
-  "port": "5432",
-  "host": "localhost",
-  "database": "app",
-  "user": "app",
-  "password": "app"
-}
