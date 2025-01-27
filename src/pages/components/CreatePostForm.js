@@ -12,8 +12,9 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Autocomplete,
   Chip,
-  OutlinedInput
+  OutlinedInput,
 } from '@mui/material';
 import { useTermsAndTaxonomyUtils } from './Utils/termsAndTaxonomyUtils';
 
@@ -37,11 +38,14 @@ const CreatePostForm = () => {
     categories: [],
     tags: []
   });
+  const [tagInput, setTagInput] = useState('');
 
   const {
     createPost,
     createTermRelationship,
-    getTermsByTaxonomy
+    getTermsByTaxonomy,
+    createTerm,
+    createTaxonomy
   } = useTermsAndTaxonomyUtils();
 
   useEffect(() => {
@@ -67,6 +71,72 @@ const CreatePostForm = () => {
     setFormData(prev => ({
       ...prev,
       [name]: value
+    }));
+  };
+
+  const handleTagAdd = async (newTagName) => {
+    // Check if tag already exists
+    const existingTag = availableTerms.tags.find(
+      tag => tag.name.toLowerCase() === newTagName.toLowerCase()
+    );
+
+    try {
+      let tagToAdd;
+
+      if (existingTag) {
+        // Use existing tag
+        tagToAdd = existingTag;
+      } else {
+        // Create new tag
+        const newTermData = {
+          name: newTagName,
+          slug: newTagName.toLowerCase().replace(/\s+/g, '-')
+        };
+
+        // Create term
+        const newTerm = await createTerm(newTermData);
+
+        // Create taxonomy for the term
+        await createTaxonomy({
+          term_id: newTerm.term_id,
+          taxonomy: 'post_tag',
+          description: '',
+          parent: 0,
+          count: 0
+        });
+
+        // Refresh available tags
+        const updatedTags = await getTermsByTaxonomy('post_tag');
+        setAvailableTerms(prev => ({
+          ...prev,
+          tags: updatedTags
+        }));
+
+        // Find the newly created tag
+        tagToAdd = updatedTags.find(tag => tag.name === newTagName);
+      }
+
+      // Add tag to selected terms
+      if (tagToAdd && !formData.selectedTerms.includes(tagToAdd.term_id)) {
+        const updatedTerms = [...formData.selectedTerms, tagToAdd.term_id];
+        setFormData(prev => ({
+          ...prev,
+          selectedTerms: updatedTerms
+        }));
+      }
+
+      // Clear input
+      setTagInput('');
+    } catch (err) {
+      console.error('Error adding tag:', err);
+      setError('Failed to add tag');
+    }
+  };
+
+  const handleTagDelete = (tagToDelete) => {
+    setFormData(prev => ({
+      ...prev,
+      selectedTerms: prev.selectedTerms.filter(termId => termId !== tagToDelete)
     }));
   };
 
@@ -161,7 +231,7 @@ const CreatePostForm = () => {
             onChange={handleInputChange}
             size="small"
           />
-
+  
           <FormControl fullWidth size="small">
             <InputLabel>Status</InputLabel>
             <Select
@@ -183,6 +253,7 @@ const CreatePostForm = () => {
               name="post_type"
               onChange={handleInputChange}
             >
+              <MenuItem value="card">Card</MenuItem>
               <MenuItem value="post">Post</MenuItem>
               <MenuItem value="page">Page</MenuItem>
             </Select>
@@ -240,57 +311,46 @@ const CreatePostForm = () => {
             </Select>
           </FormControl>
 
-          <FormControl fullWidth size="small">
-            <InputLabel>Tags</InputLabel>
-            <Select
-              multiple
-              value={formData.selectedTerms.filter(termId => 
-                availableTerms.tags.some(tag => tag.term_id === termId)
-              )}
-              onChange={(e) => {
-                const newTerms = formData.selectedTerms.filter(termId => 
-                  availableTerms.categories.some(cat => cat.term_id === termId)
-                );
-                setFormData(prev => ({
-                  ...prev,
-                  selectedTerms: [...newTerms, ...e.target.value]
-                }));
-              }}
-              input={<OutlinedInput label="Tags" />}
-              renderValue={(selected) => (
-                <Box className="flex flex-wrap gap-1">
-                  {selected.map((termId) => {
-                    const term = availableTerms.tags.find(tag => tag.term_id === termId);
-                    return term ? (
-                      <Chip 
-                        key={term.term_id} 
-                        label={term.name} 
-                        size="small"
-                      />
-                    ) : null;
-                  })}
-                </Box>
-              )}
-            >
-              {availableTerms.tags.map((tag) => (
-                <MenuItem key={tag.term_id} value={tag.term_id}>
-                  {tag.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth size="small">
-            <InputLabel>Comments</InputLabel>
-            <Select
-              value={formData.comment_status}
-              name="comment_status"
-              onChange={handleInputChange}
-            >
-              <MenuItem value="open">Allow</MenuItem>
-              <MenuItem value="closed">Disallow</MenuItem>
-            </Select>
-          </FormControl>
+          <Autocomplete
+            multiple
+            freeSolo
+            options={availableTerms.tags.map((tag) => tag.name)}
+            value={formData.selectedTerms.map(
+              termId => availableTerms.tags.find(tag => tag.term_id === termId)?.name || ''
+            )}
+            inputValue={tagInput}
+            onInputChange={(event, newInputValue) => {
+              // Check for space to create chip
+              if (event && event.type === 'change' && newInputValue.endsWith(' ')) {
+                const trimmedValue = newInputValue.trim();
+                if (trimmedValue) {
+                  handleTagAdd(trimmedValue);
+                }
+              }
+              setTagInput(newInputValue);
+            }}
+            renderTags={(value, getTagProps) =>
+              formData.selectedTerms.map((termId, index) => {
+                const tag = availableTerms.tags.find(t => t.term_id === termId);
+                return tag ? (
+                  <Chip
+                    key={termId}
+                    label={tag.name}
+                    onDelete={() => handleTagDelete(termId)}
+                    {...getTagProps({ index })}
+                  />
+                ) : null;
+              })
+            }
+            renderInput={(params) => (
+              <TextField 
+                {...params} 
+                variant="outlined" 
+                label="Tags" 
+                placeholder="Add tags" 
+              />
+            )}
+          />
 
           <Button
             type="submit"
