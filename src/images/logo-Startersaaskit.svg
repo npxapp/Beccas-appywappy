@@ -1,0 +1,11 @@
+<svg 
+    viewBox="0 0 250 50" 
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="xMidYMid meet">
+  <text x="10" y="35" 
+        font-family="Arial, sans-serif" font-size="32" 
+        font-weight="bold">
+    <tspan fill="#6B4EFF">Starter</tspan>
+    <tspan fill="#A8A8A8">SAASKit</tspan>
+  </text>
+</svg>
