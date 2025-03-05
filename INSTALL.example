@@ -1,0 +1,39 @@
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo aptitude install nodejs
+node -v
+npm -v
+sudo aptitude install npm
+export PATH=$PATH:/usr/local/bin
+sudo npm install -g npx
+npx --version
+npx create-react-app starterfrontend-react-spa
+cd starterfrontend-react-spa
+npm start
+sudo aptitude purge nodejs
+sudo aptitude autoremove
+sudo rm /etc/apt/sources.list.d/nodesource.list
+sudo rm /etc/apt/sources.list.d/nodesource.list.save
+
+
+root@mail:/var/www# npx -v
+10.8.2
+root@mail:/var/www# npm -v
+10.8.2
+root@mail:/var/www# node -v
+v20.18.1
+root@mail:/var/www#
+
+npx create-react-app starterfrontend-react-spa
+cd starterfrontend-react-spa
+npm install \
+react@18 \
+react-dom@18
+npm install web-vitals
+
+
+npx create-react-app starterfrontend-react-spa
+cd starterfrontend-react-spa
+npm install \
+react@18 \
+react-dom@18
+npm install web-vitals
